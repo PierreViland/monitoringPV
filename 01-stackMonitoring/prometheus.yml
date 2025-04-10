@@ -1,0 +1,10 @@
+global:
+  scrape_interval: 15s #Interval de récuperation des donnees
+  
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['prometheus:9090']
+  - job_name: 'serveurPython'
+    static_configs:
+      - targets: ['192.168.1.19:8800']  # Remplacez par l'adresse IP de votre serveur
