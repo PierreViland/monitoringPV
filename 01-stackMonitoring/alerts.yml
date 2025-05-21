@@ -1,0 +1,11 @@
+groups:
+  - name: request-timing-alerts
+    rules:
+      - alert: TimeBetweenRequestsTooShort
+        expr: http_time_between_requests_seconds < 4
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Temps de réponse trop faible, attaque potentielle"
+          description: "Le temps entre les requêtes est trop faible (moins de 4 secondes), ce qui pourrait indiquer une attaque DDoS."
