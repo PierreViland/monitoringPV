@@ -1,0 +1,18 @@
+services:
+  nginx-proxy:
+    image: nginx:latest
+    container_name: nginxReverseProxy
+    ports:
+      - "8008:8008"
+      - "4433:4433"
+    volumes:
+      - ./nginx.conf/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./cert/:/etc/nginx/certs/:ro
+    networks:
+      - mynet
+
+networks:
+  mynet:
+    external: true # Indique que le réseau existe déjà
+    name: 00-serveurlemp_mynet # Nom explicite du réseau existant
+    

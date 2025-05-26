@@ -7,7 +7,7 @@ scrape_configs:
   #    - targets: ['prometheus:9090']
   
   - job_name: 'prometheus'
-    metrics_path: /prometheus/metrics
+    metrics_path: /metrics
     static_configs:
       - targets: ['192.168.1.30:4433']
     scheme: https
@@ -17,10 +17,12 @@ scrape_configs:
   - job_name: 'serveurPython'
     static_configs:
       - targets: ['192.168.1.30:8800']  # Remplacez par l'adresse IP de votre serveur
+ 
+
   #- job_name: 'serveurNginx'
   #  static_configs:
   #    - targets: ['192.168.1.30:9113']  # Remplacez par l'adresse IP de votre serveur
-  -job_name : 'serveurNginxHttps'
+  - job_name : 'serveurNginxHttps'
     metrics_path: /nginx-metrics/metrics
     static_configs:
       - targets: ['192.168.1.30:4433']
