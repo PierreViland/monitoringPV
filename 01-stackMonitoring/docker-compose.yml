@@ -2,15 +2,15 @@ services:
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
-    ports:
-      - "9090:9090"
+    #ports:			#A enelver pour que l'on ne voit plus le port HTTP (derriere le reverse proxy)
+    #  - "9090:9090"
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - ./alerts.yml:/etc/prometheus/alerts.yml
     command:
-      - "--config.file=/etc/prometheus/prometheus.yml"
-      - '--web.route-prefix=/'
-      - '--web.external-url=https://192.168.1.30:4433'  
+      - "--config.file=/etc/prometheus/prometheus.yml" #Indique l'emplacement du fichier de conf
+      - '--web.route-prefix=/'                         #Indique le prefix de l'url de prometheus. A faire si reverse Proxy
+      - '--web.external-url=https://192.168.1.30:4433' #Url de point d'entree de prometheus. A faire si reverse Proxy 
 
     networks: 
       - mynet

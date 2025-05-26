@@ -5,8 +5,8 @@ services:
     container_name: nginx_exporterPV
     command:
       - --nginx.scrape-uri=http://nginxPV:9114/nginx_status
-    ports:
-      - "9113:9113"
+    #ports:   # A supprimer lorsque reverse proxy. On ne redirige pas le port sur l'hote
+    #  - "9113:9113"
     networks:
       - mynet
 
