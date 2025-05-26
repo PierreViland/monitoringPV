@@ -2,15 +2,32 @@ global:
   scrape_interval: 15s #Interval de récuperation des donnees
   
 scrape_configs:
+  #- job_name: 'prometheus'
+  #  static_configs:
+  #    - targets: ['prometheus:9090']
+  
   - job_name: 'prometheus'
+    metrics_path: /prometheus/metrics
     static_configs:
-      - targets: ['prometheus:9090']
+      - targets: ['192.168.1.30:4433']
+    scheme: https
+    tls_config:
+      insecure_skip_verify: true
+
   - job_name: 'serveurPython'
     static_configs:
       - targets: ['192.168.1.30:8800']  # Remplacez par l'adresse IP de votre serveur
-  - job_name: 'serveurNginx'
+  #- job_name: 'serveurNginx'
+  #  static_configs:
+  #    - targets: ['192.168.1.30:9113']  # Remplacez par l'adresse IP de votre serveur
+  -job_name : 'serveurNginxHttps'
+    metrics_path: /nginx-metrics/metrics
     static_configs:
-      - targets: ['192.168.1.30:9113']  # Remplacez par l'adresse IP de votre serveur
+      - targets: ['192.168.1.30:4433']
+    scheme: https
+    tls_config:
+      insecure_skip_verify: true
+
   - job_name : 'mySQL'
     static_configs: 
       - targets: ['192.168.1.30:9104']
