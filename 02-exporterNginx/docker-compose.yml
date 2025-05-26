@@ -1,0 +1,35 @@
+services:
+  # NGINX Prometheus Exporter
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter:0.11.0
+    container_name: nginx_exporterPV
+    command:
+      - --nginx.scrape-uri=http://nginxPV:9114/nginx_status
+    ports:
+      - "9113:9113"
+    networks:
+      - mynet
+
+  # MySQL Prometheus Exporter
+  mysql-exporter:
+    image: prom/mysqld-exporter:latest
+    container_name: mysql_exporter
+    ports:
+      - "9104:9104"  # Port utilisé par Prometheus pour scraper les métriques
+    command:
+     - "--mysqld.username=root:root"  
+     - "--mysqld.address=127.0.0.1:3306"
+
+   # environment:
+   #   DATA_SOURCE_NAME: "root:root@(mysqlPV:3306)/"
+
+    volumes:
+      - ./mysql_exporter/.my.cnf:/cfg/.my.cnf
+
+    networks:
+      - mynet  # Référence au réseau défini plus bas
+
+networks:
+  mynet:
+    external: true  # Indique que le réseau existe déjà
+    name: 00-serveurlemp_mynet # Nom explicite du réseau existant
