@@ -58,3 +58,9 @@ services:
       - ./tempo-config.yaml:/etc/tempo/tempo-config.yaml
     command:
       - "-config.file=/etc/tempo/tempo-config.yaml"
+
+
+#    networks:
+#      - monitoring
+
+

@@ -8,6 +8,11 @@ scrape_configs:
   - job_name: 'serveurPython'
     static_configs:
       - targets: ['192.168.1.30:8800']  # Remplacez par l'adresse IP de votre serveur
+  - job_name: 'serveurNginx'
+    static_configs:
+      - targets: ['192.168.1.30:9113']  # Remplacez par l'adresse IP de votre serveur
+
+
 
 rule_files:
   - "alerts.yml"
