@@ -9,6 +9,8 @@ services:
       - ./alerts.yml:/etc/prometheus/alerts.yml
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
+    networks: 
+      - mynet
 
   alertmanager:
     image: prom/alertmanager:latest
@@ -19,6 +21,8 @@ services:
       - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml
     command:
       - "--config.file=/etc/alertmanager/alertmanager.yml"
+    networks: 
+      - mynet
 
   grafana:
     image: grafana/grafana:latest
@@ -28,6 +32,8 @@ services:
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - mynet
 
   loki:
     image: grafana/loki:latest
@@ -40,6 +46,9 @@ services:
       - ./loki-config.yaml:/etc/loki/local-config.yaml
       - ./loki-data:/data	
     user: "1000:1000"
+    networks:
+      - mynet
+
   promtail:
     image: grafana/promtail:latest
     container_name: promtail
@@ -48,7 +57,8 @@ services:
       - ./promtail-config.yaml:/etc/promtail/config.yaml
     command:
       - "-config.file=/etc/promtail/config.yaml"
-
+    networks:
+      - mynet
   tempo:
     image: grafana/tempo:latest
     container_name: tempo
@@ -58,7 +68,13 @@ services:
       - ./tempo-config.yaml:/etc/tempo/tempo-config.yaml
     command:
       - "-config.file=/etc/tempo/tempo-config.yaml"
+    networks: 
+      - mynet
 
+networks:
+  mynet:
+    external: true  # Indique que le réseau existe déjà
+    name: 00-serveurlemp_mynet # Nom explicite du réseau existant    
 
 #    networks:
 #      - monitoring
