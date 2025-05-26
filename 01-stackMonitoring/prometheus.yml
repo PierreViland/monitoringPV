@@ -11,7 +11,9 @@ scrape_configs:
   - job_name: 'serveurNginx'
     static_configs:
       - targets: ['192.168.1.30:9113']  # Remplacez par l'adresse IP de votre serveur
-
+  - job_name : 'mySQL'
+    static_configs: 
+      - targets: ['192.168.1.30:9104']
 
 
 rule_files:
