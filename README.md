@@ -3,6 +3,11 @@
 
 Ce dépôt propose une stack de monitoring complète pour observer des métriques avec **Prometheus**, **Grafana**, **Loki**, **Tempo** et plusieurs exporters.
 
+
+Deux branches sont présentes : 
+ - **Main** : les communication se font en http
+ - **secureMonitoring** : les communication se font en https
+
 ---
 
 ## 01-stackMonitoring : stack monitoring
