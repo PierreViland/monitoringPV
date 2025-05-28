@@ -1,3 +1,5 @@
+
+#Ne pas s'authentifier
 auth_enabled: false
 
 common:
