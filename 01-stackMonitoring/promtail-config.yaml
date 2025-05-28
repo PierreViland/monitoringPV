@@ -1,13 +1,18 @@
 server:
-  http_listen_port: 9080
+  http_listen_port: 9080 #port d'ecoute
 
+#  indiquer ou i ldoit envoyé les donnes collecte (non du containers
 clients:
   - url: http://loki:3100/loki/api/v1/push
 
+
+#Indique la position ou s'arrete la lecture
 positions:
   filename: /tmp/positions.yaml
 
 scrape_configs:
+
+#Scrap tous les log de mon hote
   - job_name: system
     static_configs:
       - targets:
@@ -15,3 +20,12 @@ scrape_configs:
         labels:
           job: varlogs
           __path__: /var/log/*.log
+
+  - job_name: nginx_container
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: nginx
+          container: nginxPV
+          __path__: /var/lib/docker/containers/85268aa8e6cb/85268aa8e6cb-json.log
