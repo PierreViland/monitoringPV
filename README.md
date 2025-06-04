@@ -73,7 +73,23 @@ La liste des jobs prometheus est présent dans le fichier **prometheus.yml**
 - **Image**: `prom/mysqld-exporter:latest`
 - **Port exposé**: `9104`
 - **Connexion**: via `--mysqld.username=root:root` (à adapter)
-- **Réseau**: `mynet`
+- **Réseau**: `00-serveurlemp_mynet`
+
+## 03-Reverse : reverseproxy 
+Reverse Proxy basé sur un NGinx pour passer les communications de monitoring en HTTPS. 
+Uniquement présent sur la branche **secureMonitoring**
+
+### Reverse proxy
+- **Serveur Nginx** : reverse proxy via docker-compose.yml
+  - **Image** : nginx : latest
+  - **Port exposé** : - '8008 4433'
+  - **Réseau** : 00-serveurlemp_mynet
+- **nginx.conf/nginx.conf** : fichier de configuration reverseProxy
+- 
+### generation certificat
+- **cert/SgeneCertClef.sh** : generation de clef et certifcat basé sur openSSL.
+
+
 
 ---
 
