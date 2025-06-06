@@ -2,8 +2,8 @@ services:
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
-    #ports:			#A enelver pour que l'on ne voit plus le port HTTP (derriere le reverse proxy)
-    #  - "9090:9090"
+    ports:			#A enelver pour que l'on ne voit plus le port HTTP (derriere le reverse proxy)
+      - "9090:9090"
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - ./alerts.yml:/etc/prometheus/alerts.yml

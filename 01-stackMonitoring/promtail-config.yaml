@@ -1,18 +1,16 @@
 server:
-  http_listen_port: 9080 #port d'ecoute
+  http_listen_port: 9080  # Port d'écoute HTTP de Promtail
+  grpc_listen_port: 0     # Désactivation de GRPC (optionnel)
 
-#  indiquer ou i ldoit envoyé les donnes collecte (non du containers
 clients:
-  - url: http://loki:3100/loki/api/v1/push
+  - url: http://loki:3100/loki/api/v1/push  # Adresse de Loki
 
-
-#Indique la position ou s'arrete la lecture
 positions:
-  filename: /tmp/positions.yaml
+  filename: /tmp/positions.yaml  # Fichier pour suivre la lecture des logs
+
 
 scrape_configs:
-
-#Scrap tous les log de mon hote
+  # Scrap tous les log de mon hôte
   - job_name: system
     static_configs:
       - targets:
@@ -28,4 +26,16 @@ scrape_configs:
         labels:
           job: nginx
           container: nginxPV
-          __path__: /var/lib/docker/containers/85268aa8e6cb/85268aa8e6cb-json.log
+          __path__: /var/lib/docker/containers/85268aa8e6cb59dd445a21d3796339e345f641f6e3e91b7606b7d495c342022d/85268aa8e6cb59dd445a21d3796339e345f641f6e3e91b7606b7d495c342022d-json.log
+
+    pipeline_stages:
+      - json:
+          expressions:
+            log: log
+
+      - regex:
+          expression: '"(?P<method>[A-Z]+)'
+
+      - labels:
+          method:
+
